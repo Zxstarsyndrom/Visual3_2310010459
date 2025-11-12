@@ -20,15 +20,18 @@
 
 ## 📸 Tampilan Aplikasi
 
-> **Letakkan gambar lokal** di `docs/screenshots/` dengan nama seperti di bawah agar otomatis tampil.
+> 
 
 | Halaman | Cuplikan |
 |---|---|
-| **Menu Utama** | ![Menu Utama](<img width="236" height="326" alt="image" src="https://github.com/user-attachments/assets/538b10c1-d74c-4dc5-9b57-1b28ee9d1e3a" />) |
-| **Data Admin** | ![Data Admin](<img width="584" height="614" alt="image" src="https://github.com/user-attachments/assets/c7cedfc2-c561-4606-abf5-55ef1f277ae0" />) |
-| **Data Usaha** | ![Data Usaha](<img width="690" height="569" alt="image" src="https://github.com/user-attachments/assets/b7f2caff-fd3b-4c3f-b136-fe8d08c3814b" />) |
+| **Menu Utama** | ![Menu Utama](<img width="236" height="326" alt="image" src="https://github.com/user-attachments/assets/538b10c1-d74c-4dc5-9b57-1b28ee9d1e3a" />
+) |
+| **Data Admin** | ![Data Admin](<img width="584" height="614" alt="image" src="https://github.com/user-attachments/assets/c7cedfc2-c561-4606-abf5-55ef1f277ae0" />
+) |
+| **Data Usaha** | ![Data Usaha](<img width="690" height="569" alt="image" src="https://github.com/user-attachments/assets/b7f2caff-fd3b-4c3f-b136-fe8d08c3814b" />
+) |
 
-**Catatan (opsional – pakai URL):** bila belum punya folder `docs/screenshots/`, kamu bisa pakai URL GitHub-Attachments. Ganti path di atas dengan URL gambarmu.
+
 
 ---
 
@@ -56,7 +59,7 @@ Visual3_2310010459/
 ├─ .env.example
 └─ README.md
 
-> Jika file `.ui` masih di root, biarkan; atau pindahkan ke `ui/` dan sesuaikan path di kode (`QFile("ui/NamaFile.ui")`).
+
 
 ---
 
