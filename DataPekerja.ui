@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>495</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Data Usaha</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="nAMAPEKERJALabel">
+       <property name="text">
+        <string>NAMA PEKERJA</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="nAMAPEKERJALineEdit"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="jENISKELAMINLabel">
+       <property name="text">
+        <string>JENIS KELAMIN</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="jENISKELAMINComboBox">
+       <item>
+        <property name="text">
+         <string>Laki-laki</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Perempuan</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="pEKERJAANLabel">
+       <property name="text">
+        <string>PEKERJAAN</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="pEKERJAANLineEdit"/>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="iDUSAHALabel">
+       <property name="text">
+        <string>ID USAHA</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QComboBox" name="comboBox"/>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="iDKELUARGALabel">
+       <property name="text">
+        <string>ID KELUARGA</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QComboBox" name="comboBox_2"/>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="dIBUATOLEHLabel">
+       <property name="text">
+        <string>DIBUAT OLEH</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <widget class="QComboBox" name="comboBox_3"/>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="gajiLineEdit"/>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="gajiLabel">
+       <property name="text">
+        <string>Gaji</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutButtons">
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>SIMPAN</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="text">
+        <string>HAPUS</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="text">
+        <string>BERSIH</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_4">
+       <property name="text">
+        <string>UBAH</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="EditCari"/>
+   </item>
+   <item>
+    <widget class="QTableWidget" name="tableWidget">
+     <column>
+      <property name="text">
+       <string>id_pekerja</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>nama_pekerja</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>jenis_kelamin</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>pekerjaan</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>gaji</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>id_usaha</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>id_keluarga</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>dibuat_oleh</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

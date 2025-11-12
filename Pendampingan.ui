@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>495</width>
+    <height>618</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="nAMAPROGRAMLabel">
+       <property name="text">
+        <string>NAMA PROGRAM</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="nAMAPROGRAMLineEdit"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="tANGGALSELESAILabel">
+       <property name="text">
+        <string>TANGGAL MULAI</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QDateEdit" name="tANGGALSELESAIDateEdit">
+       <property name="calendarPopup">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="tANGGALSELESAILabel_2">
+       <property name="text">
+        <string>TANGGAL SELESAI</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QDateEdit" name="tANGGALSELESAIDateEdit_2">
+       <property name="calendarPopup">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="lEMBAGAPENDAMPINGLabel">
+       <property name="text">
+        <string>LEMBAGA PENDAMPING</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="lEMBAGAPENDAMPINGLineEdit"/>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="iDUSAHALabel">
+       <property name="text">
+        <string>ID USAHA</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QComboBox" name="comboBox"/>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="dIBUATOLEHLabel">
+       <property name="text">
+        <string>DIBUAT OLEH</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QComboBox" name="comboBox_2"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="formLayout_2">
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>SIMPAN</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="text">
+        <string>HAPUS</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="text">
+        <string>BERSIH </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_4">
+       <property name="text">
+        <string>UBAH</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="EditCari"/>
+   </item>
+   <item>
+    <widget class="QTableWidget" name="tableWidget">
+     <column>
+      <property name="text">
+       <string>id_pendampingan</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>nama_program</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>tanggal_mulai</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>tanggal_selesai</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>lembaga_pendamping</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>id_usaha</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>dibuat_oleh</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

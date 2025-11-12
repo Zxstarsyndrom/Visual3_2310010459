@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>628</width>
+    <height>578</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="nAMAKEPALAKELUARGALabel">
+       <property name="text">
+        <string>NAMA KEPALA KELUARGA</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="nAMAKEPALAKELUARGALineEdit"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="aLAMATLabel">
+       <property name="text">
+        <string>ALAMAT</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="aLAMATLineEdit"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="jUMLAHANGGOTALabel">
+       <property name="text">
+        <string>JUMLAH ANGGOTA</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QSpinBox" name="jUMLAHANGGOTASpinBox"/>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="sTATUSEKONOMILabel">
+       <property name="text">
+        <string>STATUS EKONOMI</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QComboBox" name="sTATUSEKONOMIComboBox">
+       <item>
+        <property name="text">
+         <string>sejahtera bawah</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>sejahtera menengah</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>sejahtera atas</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="iDUSAHALabel">
+       <property name="text">
+        <string>ID USAHA</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QComboBox" name="iDUSAHAComboBox"/>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="dIBUATOLEHLabel">
+       <property name="text">
+        <string>DIBUAT OLEH</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QComboBox" name="dIBUATOLEHComboBox"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutButtons">
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>SIMPAN</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="text">
+        <string>HAPUS</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="text">
+        <string>BERSIH</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_4">
+       <property name="text">
+        <string>UBAH</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="EditCari"/>
+   </item>
+   <item>
+    <widget class="QTableWidget" name="tabelKeluarga">
+     <column>
+      <property name="text">
+       <string>id_keluarga</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>nama_kepala_keluarga</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>alamat</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>jumlah_anggota</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>status_ekonomi</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>id_Usaha</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

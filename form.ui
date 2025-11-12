@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>765</width>
+    <height>437</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>765</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuMENU">
+    <property name="title">
+     <string>MENU</string>
+    </property>
+    <addaction name="actionData_Admin"/>
+    <addaction name="actionData_Usaha"/>
+    <addaction name="actionData_Keluarga"/>
+    <addaction name="actionData_Pekerja"/>
+    <addaction name="actionKesejahteraan"/>
+    <addaction name="actionPendampingan"/>
+    <addaction name="actionresiko"/>
+   </widget>
+   <addaction name="menuMENU"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionData_Admin">
+   <property name="text">
+    <string>Data Admin</string>
+   </property>
+  </action>
+  <action name="actionData_Usaha">
+   <property name="text">
+    <string>Data Usaha</string>
+   </property>
+  </action>
+  <action name="actionData_Keluarga">
+   <property name="text">
+    <string>Data Keluarga</string>
+   </property>
+  </action>
+  <action name="actionData_Pekerja">
+   <property name="text">
+    <string>Data Pekerja</string>
+   </property>
+  </action>
+  <action name="actionKesejahteraan">
+   <property name="text">
+    <string>Kesejahteraan</string>
+   </property>
+  </action>
+  <action name="actionPendampingan">
+   <property name="text">
+    <string>Pendampingan</string>
+   </property>
+  </action>
+  <action name="actionresiko">
+   <property name="text">
+    <string>resiko</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

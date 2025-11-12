@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>489</width>
+    <height>634</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="iDPEKERJALabel">
+       <property name="text">
+        <string>ID PEKERJA</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="comboBox_2"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="jENISRESIKOLabel">
+       <property name="text">
+        <string>JENIS RESIKO</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="jENISRESIKOLineEdit"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="tINGKATRESIKOLabel">
+       <property name="text">
+        <string>TINGKAT RESIKO</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QComboBox" name="comboBox">
+       <item>
+        <property name="text">
+         <string>Rendah</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Sedang</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Tinggi</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="tINDAKANPENCEGAHANLabel">
+       <property name="text">
+        <string>TINDAKAN PENCEGAHAN</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="tINDAKANPENCEGAHANLineEdit"/>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="tANGGALINSIDENLabel">
+       <property name="text">
+        <string>TANGGAL INSIDEN</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QDateEdit" name="tANGGALINSIDENDateEdit"/>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="dIBUATOLEHLabel">
+       <property name="text">
+        <string>DIBUAT OLEH</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QComboBox" name="comboBox_3"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="formLayout_2">
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>SIMPAN</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="text">
+        <string>HAPUS</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="text">
+        <string>BERSIH</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_4">
+       <property name="text">
+        <string>UBAH</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="EditCari"/>
+   </item>
+   <item>
+    <widget class="QTableWidget" name="tableWidget">
+     <column>
+      <property name="text">
+       <string>id_risiko</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>id_pekerja</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>jenis_risiko</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>tingkat_risiko</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>tindakan_pencegahan</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Tanggal_indisiden</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>dibuat_oleh</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
