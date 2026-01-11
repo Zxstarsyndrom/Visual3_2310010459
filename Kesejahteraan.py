@@ -5,31 +5,68 @@ from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile
 from crudDB import my_cruddb
 
-
 class Kesejahteraan(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
+        # 1. Loading UI File
         ui_file = QFile("Kesejahteraan.ui")
-        # setelah menampung main.ui dibuka dan tidak bisa di edit
         ui_file.open(QFile.ReadOnly)
-        # membuat object loader ui
         loader = QUiLoader()
         self.formKesejahteraan = loader.load(ui_file, self)
         ui_file.close()
 
-        # object CRUD (koneksi DB)
+        # 2. Object CRUD (Koneksi Database)
         self.crud = my_cruddb()
-        self.formKesejahteraan.pushButton.clicked.connect(self.doSimpanKesejahteraan)
-        self.formKesejahteraan.pushButton_4.clicked.connect(self.doUbahKesejahteraan)
-        self.formKesejahteraan.pushButton_2.clicked.connect(self.doHapusKesejahteraan)
-        self.formKesejahteraan.pushButton_3.clicked.connect(self.doBersihKesejahteraan)
 
+        # 3. Koneksi Tombol CRUD
+        self.formKesejahteraan.pushButton.clicked.connect(self.doSimpanKesejahteraan)   # Simpan
+        self.formKesejahteraan.pushButton_4.clicked.connect(self.doUbahKesejahteraan)  # Ubah
+        self.formKesejahteraan.pushButton_2.clicked.connect(self.doHapusKesejahteraan) # Hapus
+        self.formKesejahteraan.pushButton_3.clicked.connect(self.doBersihKesejahteraan) # Bersih
+
+        # 4. Koneksi Tabel (Signal Klik) & Pencarian
+        self.formKesejahteraan.tableWidget.cellClicked.connect(self.getData)           # Ambil data saat klik
+        self.formKesejahteraan.EditCari.textChanged.connect(self.doCariKesejahteraan)  # Search real-time
+
+        # 5. Inisialisasi Data Awal
         self.muatComboKeluarga()
         self.muatComboAdmin()
-
         self.tampilData()
-        self.formKesejahteraan.EditCari.textChanged.connect(self.doCariKesejahteraan)
+
+    def getData(self, row, col):
+        """Mengambil data dari baris tabel yang diklik dan menampilkannya di form input"""
+        # Mapping Kolom Tabel (berdasarkan urutan di tampilData)
+        item_id_kel      = self.formKesejahteraan.tableWidget.item(row, 1) # Kolom 1: ID Keluarga
+        item_tahun       = self.formKesejahteraan.tableWidget.item(row, 2) # Kolom 2: Tahun
+        item_penghasilan = self.formKesejahteraan.tableWidget.item(row, 3) # Kolom 3: Penghasilan
+        item_pendidikan  = self.formKesejahteraan.tableWidget.item(row, 4) # Kolom 4: Pendidikan Anak
+        item_rumah       = self.formKesejahteraan.tableWidget.item(row, 5) # Kolom 5: Status Rumah
+        item_ipm         = self.formKesejahteraan.tableWidget.item(row, 6) # Kolom 6: Kategori IPM
+        item_admin       = self.formKesejahteraan.tableWidget.item(row, 7) # Kolom 7: Dibuat Oleh (Admin)
+
+        # Isi LineEdit
+        if item_penghasilan: self.formKesejahteraan.pENGHASILANBLNLineEdit.setText(item_penghasilan.text())
+        if item_pendidikan: self.formKesejahteraan.pENDIDIKANANAKLineEdit.setText(item_pendidikan.text())
+
+        # Isi SpinBox (Tahun)
+        if item_tahun:
+            self.formKesejahteraan.tAHUNSpinBox.setValue(int(item_tahun.text()))
+
+        # Isi ComboBox Status & IPM (Teks)
+        if item_rumah:
+            self.formKesejahteraan.sTATUSRUMAHComboBox.setCurrentText(item_rumah.text())
+        if item_ipm:
+            self.formKesejahteraan.kATEGORIIPMComboBox.setCurrentText(item_ipm.text())
+
+        # Isi ComboBox Foreign Key (Mencari berdasarkan ID di data item)
+        if item_id_kel:
+            idx_kel = self.formKesejahteraan.comboBox.findData(int(item_id_kel.text()))
+            self.formKesejahteraan.comboBox.setCurrentIndex(idx_kel)
+
+        if item_admin:
+            idx_adm = self.formKesejahteraan.comboBox_2.findData(int(item_admin.text()))
+            self.formKesejahteraan.comboBox_2.setCurrentIndex(idx_adm)
 
     def muatComboKeluarga(self):
         cb = self.formKesejahteraan.comboBox
@@ -47,86 +84,65 @@ class Kesejahteraan(QWidget):
 
     def doSimpanKesejahteraan(self):
         if self.formKesejahteraan.comboBox.currentData() is None:
-            QMessageBox.information(None, "Informasi", "ID Keluarga belum dipilih")
+            QMessageBox.information(self, "Informasi", "ID Keluarga belum dipilih")
             self.formKesejahteraan.comboBox.setFocus()
-        elif self.formKesejahteraan.tAHUNSpinBox.value() <= 0:
-            QMessageBox.information(None, "Informasi", "Tahun belum valid")
-            self.formKesejahteraan.tAHUNSpinBox.setFocus()
         elif not self.formKesejahteraan.pENGHASILANBLNLineEdit.text().strip():
-            QMessageBox.information(None, "Informasi", "Penghasilan belum di isi")
+            QMessageBox.information(self, "Informasi", "Penghasilan belum di isi")
             self.formKesejahteraan.pENGHASILANBLNLineEdit.setFocus()
-        elif not self.formKesejahteraan.pENDIDIKANANAKLineEdit.text().strip():
-            QMessageBox.information(None, "Informasi", "Pendidikan Anak belum di isi")
-            self.formKesejahteraan.pENDIDIKANANAKLineEdit.setFocus()
-        elif not self.formKesejahteraan.sTATUSRUMAHComboBox.currentText().strip():
-            QMessageBox.information(None, "Informasi", "Status Rumah belum di isi")
-            self.formKesejahteraan.sTATUSRUMAHComboBox.setFocus()
-        elif not self.formKesejahteraan.kATEGORIIPMComboBox.currentText().strip():
-            QMessageBox.information(None, "Informasi", "Kategori IPM belum di isi")
-            self.formKesejahteraan.kATEGORIIPMComboBox.setFocus()
-        elif self.formKesejahteraan.comboBox_2.currentData() is None:
-            QMessageBox.information(None, "Informasi", "Dibuat Oleh belum dipilih")
-            self.formKesejahteraan.comboBox_2.setFocus()
         else:
-            pesan = QMessageBox.information(
-                None,
-                "Informasi",
-                "Apakah Anda Yakin Menyimpan Data Ini?",
-                QMessageBox.Yes | QMessageBox.No
-            )
+            pesan = QMessageBox.question(self, "Konfirmasi", "Apakah Anda Yakin Menyimpan Data Ini?",
+                                         QMessageBox.Yes | QMessageBox.No)
             if pesan == QMessageBox.Yes:
-                tempIDKeluarga     = self.formKesejahteraan.comboBox.currentData()
-                tempTahun          = self.formKesejahteraan.tAHUNSpinBox.value()
-                tempPenghasilan    = self.formKesejahteraan.pENGHASILANBLNLineEdit.text()
-                tempPendidikanAnak = self.formKesejahteraan.pENDIDIKANANAKLineEdit.text()
-                tempStatusRumah    = self.formKesejahteraan.sTATUSRUMAHComboBox.currentText()
-                tempKategoriIPM    = self.formKesejahteraan.kATEGORIIPMComboBox.currentText()
-                tempDibuatOleh     = self.formKesejahteraan.comboBox_2.currentData()
-
                 self.crud.simpanKesejahteraan(
-                    tempIDKeluarga,
-                    tempTahun,
-                    tempPenghasilan,
-                    tempPendidikanAnak,
-                    tempStatusRumah,
-                    tempKategoriIPM,
-                    tempDibuatOleh
+                    self.formKesejahteraan.comboBox.currentData(),
+                    self.formKesejahteraan.tAHUNSpinBox.value(),
+                    self.formKesejahteraan.pENGHASILANBLNLineEdit.text(),
+                    self.formKesejahteraan.pENDIDIKANANAKLineEdit.text(),
+                    self.formKesejahteraan.sTATUSRUMAHComboBox.currentText(),
+                    self.formKesejahteraan.kATEGORIIPMComboBox.currentText(),
+                    self.formKesejahteraan.comboBox_2.currentData()
                 )
                 self.tampilData()
-                QMessageBox.information(None, "Informasi", "Data Berhasil di Simpan")
-            else:
-                pass
+                self.doBersihKesejahteraan()
+                QMessageBox.information(self, "Informasi", "Data Berhasil Disimpan")
 
     def doUbahKesejahteraan(self):
-        tempIDKeluarga     = self.formKesejahteraan.comboBox.currentData()
-        tempTahun          = self.formKesejahteraan.tAHUNSpinBox.value()
-        tempPenghasilan    = self.formKesejahteraan.pENGHASILANBLNLineEdit.text()
-        tempPendidikanAnak = self.formKesejahteraan.pENDIDIKANANAKLineEdit.text()
-        tempStatusRumah    = self.formKesejahteraan.sTATUSRUMAHComboBox.currentText()
-        tempKategoriIPM    = self.formKesejahteraan.kATEGORIIPMComboBox.currentText()
-        tempDibuatOleh     = self.formKesejahteraan.comboBox_2.currentData()
+        # Memeriksa apakah data sudah dipilih (biasanya via ID Keluarga & Tahun)
+        if self.formKesejahteraan.comboBox.currentData() is None:
+            QMessageBox.warning(self, "Peringatan", "Pilih data di tabel terlebih dahulu!")
+            return
 
         self.crud.ubahKesejahteraan(
-            tempIDKeluarga,
-            tempTahun,
-            tempPenghasilan,
-            tempPendidikanAnak,
-            tempStatusRumah,
-            tempKategoriIPM,
-            tempDibuatOleh
+            self.formKesejahteraan.comboBox.currentData(),
+            self.formKesejahteraan.tAHUNSpinBox.value(),
+            self.formKesejahteraan.pENGHASILANBLNLineEdit.text(),
+            self.formKesejahteraan.pENDIDIKANANAKLineEdit.text(),
+            self.formKesejahteraan.sTATUSRUMAHComboBox.currentText(),
+            self.formKesejahteraan.kATEGORIIPMComboBox.currentText(),
+            self.formKesejahteraan.comboBox_2.currentData()
         )
-        QMessageBox.information(None, "Informasi", "Data berhasil diubah")
+        self.tampilData()
+        QMessageBox.information(self, "Informasi", "Data berhasil diubah")
 
     def doHapusKesejahteraan(self):
-        tempIDKeluarga = self.formKesejahteraan.comboBox.currentData()
-        tempTahun      = self.formKesejahteraan.tAHUNSpinBox.value()
+        id_kel = self.formKesejahteraan.comboBox.currentData()
+        tahun = self.formKesejahteraan.tAHUNSpinBox.value()
 
-        self.crud.hapusKesejahteraan(tempIDKeluarga, tempTahun)
-        QMessageBox.information(None, "Informasi", "Data berhasil dihapus")
+        if id_kel is None:
+            QMessageBox.warning(self, "Peringatan", "Pilih data yang akan dihapus!")
+            return
+
+        pesan = QMessageBox.question(self, "Konfirmasi", f"Yakin hapus data Kesejahteraan Keluarga ID {id_kel} Tahun {tahun}?",
+                                     QMessageBox.Yes | QMessageBox.No)
+        if pesan == QMessageBox.Yes:
+            self.crud.hapusKesejahteraan(id_kel, tahun)
+            self.tampilData()
+            self.doBersihKesejahteraan()
+            QMessageBox.information(self, "Informasi", "Data berhasil dihapus")
 
     def doBersihKesejahteraan(self):
         self.formKesejahteraan.comboBox.setCurrentIndex(0)
-        self.formKesejahteraan.tAHUNSpinBox.setValue(2025)
+        self.formKesejahteraan.tAHUNSpinBox.setValue(2026) # Update ke tahun berjalan
         self.formKesejahteraan.pENGHASILANBLNLineEdit.clear()
         self.formKesejahteraan.pENDIDIKANANAKLineEdit.clear()
         self.formKesejahteraan.sTATUSRUMAHComboBox.setCurrentIndex(0)
@@ -142,7 +158,11 @@ class Kesejahteraan(QWidget):
             self.formKesejahteraan.tableWidget.setItem(i, 0, QTableWidgetItem(str(r["id_kesejahteraan"])))
             self.formKesejahteraan.tableWidget.setItem(i, 1, QTableWidgetItem("" if r["id_keluarga"] is None else str(r["id_keluarga"])))
             self.formKesejahteraan.tableWidget.setItem(i, 2, QTableWidgetItem(str(r["tahun"])))
-            self.formKesejahteraan.tableWidget.setItem(i, 3, QTableWidgetItem("" if r["penghasilan"] is None else f"{float(r['penghasilan']):.2f}"))
+
+            penghasilan = r.get("penghasilan")
+            p_text = "" if penghasilan is None else f"{float(penghasilan):.2f}"
+            self.formKesejahteraan.tableWidget.setItem(i, 3, QTableWidgetItem(p_text))
+
             self.formKesejahteraan.tableWidget.setItem(i, 4, QTableWidgetItem(r["pendidikan_anak"] or ""))
             self.formKesejahteraan.tableWidget.setItem(i, 5, QTableWidgetItem(r["status_rumah"] or ""))
             self.formKesejahteraan.tableWidget.setItem(i, 6, QTableWidgetItem(r["kategori_ipm"] or ""))
@@ -158,7 +178,11 @@ class Kesejahteraan(QWidget):
             self.formKesejahteraan.tableWidget.setItem(i, 0, QTableWidgetItem(str(r["id_kesejahteraan"])))
             self.formKesejahteraan.tableWidget.setItem(i, 1, QTableWidgetItem("" if r["id_keluarga"] is None else str(r["id_keluarga"])))
             self.formKesejahteraan.tableWidget.setItem(i, 2, QTableWidgetItem(str(r["tahun"])))
-            self.formKesejahteraan.tableWidget.setItem(i, 3, QTableWidgetItem("" if r["penghasilan"] is None else f"{float(r['penghasilan']):.2f}"))
+
+            penghasilan = r.get("penghasilan")
+            p_text = "" if penghasilan is None else f"{float(penghasilan):.2f}"
+            self.formKesejahteraan.tableWidget.setItem(i, 3, QTableWidgetItem(p_text))
+
             self.formKesejahteraan.tableWidget.setItem(i, 4, QTableWidgetItem(r["pendidikan_anak"] or ""))
             self.formKesejahteraan.tableWidget.setItem(i, 5, QTableWidgetItem(r["status_rumah"] or ""))
             self.formKesejahteraan.tableWidget.setItem(i, 6, QTableWidgetItem(r["kategori_ipm"] or ""))

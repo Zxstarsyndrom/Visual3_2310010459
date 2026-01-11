@@ -38,6 +38,42 @@ class my_cruddb:
         c.close()
         return rows
 
+    # =====================
+    # BAYA
+    # =====================
+    def simpanBaya(self, tempkode, tempnamabarang, tempharga, tempjumlah, temptotal):
+        cursor = self.conn.cursor()
+        sql = """
+            INSERT INTO baya
+            (KODE, NAMA_BARANG, HARGA, JUMLAH, TOTAL)
+            VALUES (%s, %s, %s, %s, %s)
+        """
+        val = (tempkode, tempnamabarang, tempharga, tempjumlah, temptotal)
+        cursor.execute(sql, val)
+        self.conn.commit()
+        cursor.close()
+
+    def ubahBaya(self, tempkode, tempnamabarang, tempharga, tempjumlah, temptotal):
+            cursor = self.conn.cursor()
+            sql = """
+                UPDATE baya
+                SET NAMA_BARANG = %s,
+                    HARGA = %s,
+                    JUMLAH = %s,
+                    TOTAL = %s
+                WHERE KODE = %s
+            """
+            val = (tempnamabarang, tempharga, tempjumlah, temptotal, tempkode)
+            cursor.execute(sql, val)
+            self.conn.commit()
+            cursor.close()
+
+    def dataBaya(self):
+        cur = self.conn.cursor(dictionary=True)
+        cur.execute("SELECT * FROM BAYA ORDER BY KODE ASC")
+        record = cur.fetchall()
+        cur.close()
+        return record
 
     # =====================
     # ADMIN

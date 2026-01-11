@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>892</width>
+    <height>586</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QWidget" name="formLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>60</y>
+     <width>311</width>
+     <height>181</height>
+    </rect>
+   </property>
+   <layout class="QFormLayout" name="formLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="kodeLabel">
+      <property name="text">
+       <string>kode</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="kodeLineEdit"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="nAMABARANGLabel">
+      <property name="text">
+       <string>NAMA BARANG</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="nAMABARANGLineEdit"/>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="hARGALabel">
+      <property name="text">
+       <string>HARGA</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="hARGALineEdit"/>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="jUMLAHLabel">
+      <property name="text">
+       <string>JUMLAH</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLineEdit" name="jUMLAHLineEdit"/>
+    </item>
+    <item row="4" column="0">
+     <widget class="QLabel" name="tOTALLabel">
+      <property name="text">
+       <string> TOTAL +DISKON 7%</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QLineEdit" name="tOTALLineEdit"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>250</y>
+     <width>90</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>SIMPAN</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>420</x>
+     <y>250</y>
+     <width>90</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>UBAH</string>
+   </property>
+  </widget>
+  <widget class="QTableWidget" name="tablebaya">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>340</y>
+     <width>631</width>
+     <height>192</height>
+    </rect>
+   </property>
+   <column>
+    <property name="text">
+     <string>KODE</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>NAMA_BARANG</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>HARGA</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>JUMLAH</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>TOTAL</string>
+    </property>
+   </column>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

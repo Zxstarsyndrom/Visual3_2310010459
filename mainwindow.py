@@ -9,7 +9,7 @@ from Kesejahteraan import Kesejahteraan
 from DataPekerja import DataPekerja
 from Pendampingan import Pendampingan
 from Resiko import Resiko
-
+from Baya import Baya
 
 
 
@@ -49,8 +49,12 @@ class main(QMainWindow):
         self.formutama.actionKesejahteraan.triggered.connect(self.bukaKesejahteraan)
         self.formutama.actionPendampingan.triggered.connect(self.bukaPendampingan)
         self.formutama.actionresiko.triggered.connect(self.bukaDataResiko)
+        self.formutama.actionBAYA.triggered.connect(self.bukaBaya)
 
-
+    def bukaBaya(self):
+        """Fungsi untuk membuka Baya.ui"""
+        self.window_Baya = Baya()
+        self.window_Baya.show()
     def bukaDataAdmin(self):
         """Fungsi untuk membuka DataAdmin.ui"""
         self.window_admin = DataAdmin()

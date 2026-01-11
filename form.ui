@@ -34,6 +34,7 @@
     <addaction name="actionKesejahteraan"/>
     <addaction name="actionPendampingan"/>
     <addaction name="actionresiko"/>
+    <addaction name="actionBAYA"/>
    </widget>
    <addaction name="menuMENU"/>
   </widget>
@@ -71,6 +72,11 @@
   <action name="actionresiko">
    <property name="text">
     <string>resiko</string>
+   </property>
+  </action>
+  <action name="actionBAYA">
+   <property name="text">
+    <string>BAYA</string>
    </property>
   </action>
  </widget>

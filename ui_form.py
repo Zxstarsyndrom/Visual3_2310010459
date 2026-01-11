@@ -38,6 +38,8 @@ class Ui_MainWindow(object):
         self.actionPendampingan.setObjectName(u"actionPendampingan")
         self.actionresiko = QAction(MainWindow)
         self.actionresiko.setObjectName(u"actionresiko")
+        self.actionBAYA = QAction(MainWindow)
+        self.actionBAYA.setObjectName(u"actionBAYA")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         MainWindow.setCentralWidget(self.centralwidget)
@@ -59,6 +61,7 @@ class Ui_MainWindow(object):
         self.menuMENU.addAction(self.actionKesejahteraan)
         self.menuMENU.addAction(self.actionPendampingan)
         self.menuMENU.addAction(self.actionresiko)
+        self.menuMENU.addAction(self.actionBAYA)
 
         self.retranslateUi(MainWindow)
 
@@ -74,6 +77,7 @@ class Ui_MainWindow(object):
         self.actionKesejahteraan.setText(QCoreApplication.translate("MainWindow", u"Kesejahteraan", None))
         self.actionPendampingan.setText(QCoreApplication.translate("MainWindow", u"Pendampingan", None))
         self.actionresiko.setText(QCoreApplication.translate("MainWindow", u"resiko", None))
+        self.actionBAYA.setText(QCoreApplication.translate("MainWindow", u"BAYA", None))
         self.menuMENU.setTitle(QCoreApplication.translate("MainWindow", u"MENU", None))
     # retranslateUi
 

@@ -1,37 +1,73 @@
 # This Python file uses the following encoding: utf-8
 import sys
-
 from PySide6.QtWidgets import QApplication, QWidget, QTableWidgetItem, QMessageBox
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile
 from crudDB import my_cruddb
 
-
 class DataPekerja(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
+        # 1. Load UI File
         ui_file = QFile("DataPekerja.ui")
-        # setelah menampung main.ui dibuka dan tidak bisa di edit
         ui_file.open(QFile.ReadOnly)
-        # membuat object loader ui
         loader = QUiLoader()
         self.formPekerja = loader.load(ui_file, self)
         ui_file.close()
 
         self.crud = my_cruddb()
 
-        self.formPekerja.pushButton.clicked.connect(self.doSimpanPekerja)
-        self.formPekerja.pushButton_4.clicked.connect(self.doUbahPekerja)
-        self.formPekerja.pushButton_2.clicked.connect(self.doHapusPekerja)
-        self.formPekerja.pushButton_3.clicked.connect(self.doBersihPekerja)
+        # 2. Koneksi Tombol CRUD
+        self.formPekerja.pushButton.clicked.connect(self.doSimpanPekerja)      # Simpan
+        self.formPekerja.pushButton_4.clicked.connect(self.doUbahPekerja)     # Ubah
+        self.formPekerja.pushButton_2.clicked.connect(self.doHapusPekerja)    # Hapus
+        self.formPekerja.pushButton_3.clicked.connect(self.doBersihPekerja)   # Bersih
 
+        # 3. Koneksi Tabel (Signal Klik) & Pencarian
+        self.formPekerja.tableWidget.cellClicked.connect(self.getData)
+        self.formPekerja.EditCari.textChanged.connect(self.doCariPekerja)
+
+        # 4. Inisialisasi Data (ComboBox & Tabel)
         self.muatComboUsaha()
         self.muatComboKeluarga()
         self.muatComboAdmin()
-
         self.tampilData()
-        self.formPekerja.EditCari.textChanged.connect(self.doCariPekerja)
+
+    def getData(self, row, col):
+        """Mengambil data dari tabel dan menampilkannya kembali di form input"""
+        # Mapping Kolom Tabel
+        item_id        = self.formPekerja.tableWidget.item(row, 0) # id_pekerja
+        item_nama      = self.formPekerja.tableWidget.item(row, 1) # nama_pekerja
+        item_jk        = self.formPekerja.tableWidget.item(row, 2) # jenis_kelamin
+        item_pekerjaan = self.formPekerja.tableWidget.item(row, 3) # pekerjaan
+        item_gaji      = self.formPekerja.tableWidget.item(row, 4) # gaji
+        item_id_usaha  = self.formPekerja.tableWidget.item(row, 5) # id_usaha
+        item_id_kel    = self.formPekerja.tableWidget.item(row, 6) # id_keluarga
+        item_admin     = self.formPekerja.tableWidget.item(row, 7) # dibuat_oleh (admin)
+
+        # 1. Isi LineEdit (Nama, Pekerjaan, Gaji)
+        # Jika Anda punya LineEdit untuk ID Pekerja, tambahkan di sini (misal: iDPEKERJALineEdit)
+        if item_nama: self.formPekerja.nAMAPEKERJALineEdit.setText(item_nama.text())
+        if item_pekerjaan: self.formPekerja.pEKERJAANLineEdit.setText(item_pekerjaan.text())
+        if item_gaji: self.formPekerja.gajiLineEdit.setText(item_gaji.text())
+
+        # 2. Isi ComboBox Jenis Kelamin (Teks Biasa)
+        if item_jk:
+            self.formPekerja.jENISKELAMINComboBox.setCurrentText(item_jk.text())
+
+        # 3. Isi ComboBox Foreign Key (Mencari berdasarkan ID/Data)
+        if item_id_usaha:
+            idx = self.formPekerja.comboBox.findData(int(item_id_usaha.text()))
+            self.formPekerja.comboBox.setCurrentIndex(idx)
+
+        if item_id_kel:
+            idx_kel = self.formPekerja.comboBox_2.findData(int(item_id_kel.text()))
+            self.formPekerja.comboBox_2.setCurrentIndex(idx_kel)
+
+        if item_admin:
+            idx_adm = self.formPekerja.comboBox_3.findData(int(item_admin.text()))
+            self.formPekerja.comboBox_3.setCurrentIndex(idx_adm)
 
     def muatComboUsaha(self):
         cb = self.formPekerja.comboBox
@@ -56,80 +92,55 @@ class DataPekerja(QWidget):
 
     def doSimpanPekerja(self):
         if not self.formPekerja.nAMAPEKERJALineEdit.text().strip():
-            QMessageBox.information(None, "Informasi", "Nama Pekerja belum di isi")
+            QMessageBox.information(self, "Informasi", "Nama Pekerja belum di isi")
             self.formPekerja.nAMAPEKERJALineEdit.setFocus()
-        elif not self.formPekerja.jENISKELAMINComboBox.currentText().strip():
-            QMessageBox.information(None, "Informasi", "Jenis Kelamin belum di isi")
-            self.formPekerja.jENISKELAMINComboBox.setFocus()
-        elif not self.formPekerja.pEKERJAANLineEdit.text().strip():
-            QMessageBox.information(None, "Informasi", "Pekerjaan belum di isi")
-            self.formPekerja.pEKERJAANLineEdit.setFocus()
-        elif not self.formPekerja.gajiLineEdit.text().strip():
-            QMessageBox.information(None, "Informasi", "Gaji belum di isi")
-            self.formPekerja.gajiLineEdit.setFocus()
         elif self.formPekerja.comboBox.currentData() is None:
-            QMessageBox.information(None, "Informasi", "ID Usaha belum dipilih")
+            QMessageBox.information(self, "Informasi", "ID Usaha belum dipilih")
             self.formPekerja.comboBox.setFocus()
-        elif self.formPekerja.comboBox_2.currentData() is None:
-            QMessageBox.information(None, "Informasi", "ID Keluarga belum dipilih")
-            self.formPekerja.comboBox_2.setFocus()
-        elif self.formPekerja.comboBox_3.currentData() is None:
-            QMessageBox.information(None, "Informasi", "Dibuat Oleh belum dipilih")
-            self.formPekerja.comboBox_3.setFocus()
         else:
-            pesan = QMessageBox.information(
-                None,
-                "Informasi",
-                "Apakah Anda Yakin Menyimpan Data Ini?",
-                QMessageBox.Yes | QMessageBox.No
-            )
+            pesan = QMessageBox.question(self, "Konfirmasi", "Simpan data pekerja ini?", QMessageBox.Yes | QMessageBox.No)
             if pesan == QMessageBox.Yes:
-                tempNamaPekerja  = self.formPekerja.nAMAPEKERJALineEdit.text()
-                tempJenisKelamin = self.formPekerja.jENISKELAMINComboBox.currentText()
-                tempPekerjaan    = self.formPekerja.pEKERJAANLineEdit.text()
-                tempGaji         = self.formPekerja.gajiLineEdit.text()
-                tempIDUsaha      = self.formPekerja.comboBox.currentData()
-                tempIDKeluarga   = self.formPekerja.comboBox_2.currentData()
-                tempDibuatOleh   = self.formPekerja.comboBox_3.currentData()
-
                 self.crud.simpanPekerja(
-                    tempNamaPekerja,
-                    tempJenisKelamin,
-                    tempPekerjaan,
-                    tempGaji,
-                    tempIDUsaha,
-                    tempIDKeluarga,
-                    tempDibuatOleh
+                    self.formPekerja.nAMAPEKERJALineEdit.text(),
+                    self.formPekerja.jENISKELAMINComboBox.currentText(),
+                    self.formPekerja.pEKERJAANLineEdit.text(),
+                    self.formPekerja.gajiLineEdit.text(),
+                    self.formPekerja.comboBox.currentData(),
+                    self.formPekerja.comboBox_2.currentData(),
+                    self.formPekerja.comboBox_3.currentData()
                 )
                 self.tampilData()
-                QMessageBox.information(None, "Informasi", "Data Berhasil di Simpan")
+                self.doBersihPekerja()
+                QMessageBox.information(self, "Informasi", "Data Berhasil Disimpan")
 
     def doUbahPekerja(self):
-        tempNamaPekerja  = self.formPekerja.nAMAPEKERJALineEdit.text()
-        tempJenisKelamin = self.formPekerja.jENISKELAMINComboBox.currentText()
-        tempPekerjaan    = self.formPekerja.pEKERJAANLineEdit.text()
-        tempGaji         = self.formPekerja.gajiLineEdit.text()
-
-        tempIDUsaha      = self.formPekerja.comboBox.currentData()
-        tempIDKeluarga   = self.formPekerja.comboBox_2.currentData()
-        tempDibuatOleh   = self.formPekerja.comboBox_3.currentData()
-
+        # Catatan: Fungsi ubah biasanya membutuhkan ID Pekerja sebagai parameter di SQL
         self.crud.ubahPekerja(
-            tempNamaPekerja,
-            tempJenisKelamin,
-            tempPekerjaan,
-            tempGaji,
-            tempIDUsaha,
-            tempIDKeluarga,
-            tempDibuatOleh
+            self.formPekerja.nAMAPEKERJALineEdit.text(),
+            self.formPekerja.jENISKELAMINComboBox.currentText(),
+            self.formPekerja.pEKERJAANLineEdit.text(),
+            self.formPekerja.gajiLineEdit.text(),
+            self.formPekerja.comboBox.currentData(),
+            self.formPekerja.comboBox_2.currentData(),
+            self.formPekerja.comboBox_3.currentData()
         )
-        QMessageBox.information(None, "Informasi", "Data berhasil diubah")
+        self.tampilData()
+        QMessageBox.information(self, "Informasi", "Data berhasil diubah")
 
     def doHapusPekerja(self):
         tempIDUsaha    = self.formPekerja.comboBox.currentData()
         tempIDKeluarga = self.formPekerja.comboBox_2.currentData()
-        self.crud.hapusPekerja(tempIDUsaha, tempIDKeluarga)
-        QMessageBox.information(None, "Informasi", "Data berhasil dihapus")
+
+        if tempIDUsaha is None or tempIDKeluarga is None:
+            QMessageBox.warning(self, "Peringatan", "Pilih data di tabel untuk dihapus")
+            return
+
+        pesan = QMessageBox.question(self, "Konfirmasi", "Yakin hapus data pekerja ini?", QMessageBox.Yes | QMessageBox.No)
+        if pesan == QMessageBox.Yes:
+            self.crud.hapusPekerja(tempIDUsaha, tempIDKeluarga)
+            self.tampilData()
+            self.doBersihPekerja()
+            QMessageBox.information(self, "Informasi", "Data berhasil dihapus")
 
     def doBersihPekerja(self):
         self.formPekerja.nAMAPEKERJALineEdit.clear()
@@ -146,27 +157,18 @@ class DataPekerja(QWidget):
         for r in baris:
             i = self.formPekerja.tableWidget.rowCount()
             self.formPekerja.tableWidget.insertRow(i)
-
-            self.formPekerja.tableWidget.setItem(
-                i, 0, QTableWidgetItem("" if r.get("id_pekerja") is None else str(r["id_pekerja"]))
-            )
-            self.formPekerja.tableWidget.setItem(i, 1, QTableWidgetItem(r.get("nama_pekerja")  or ""))
+            self.formPekerja.tableWidget.setItem(i, 0, QTableWidgetItem(str(r.get("id_pekerja", ""))))
+            self.formPekerja.tableWidget.setItem(i, 1, QTableWidgetItem(r.get("nama_pekerja") or ""))
             self.formPekerja.tableWidget.setItem(i, 2, QTableWidgetItem(r.get("jenis_kelamin") or ""))
-            self.formPekerja.tableWidget.setItem(i, 3, QTableWidgetItem(r.get("pekerjaan")     or ""))
+            self.formPekerja.tableWidget.setItem(i, 3, QTableWidgetItem(r.get("pekerjaan") or ""))
 
             gaji = r.get("gaji")
-            gaji_text = "" if gaji is None else f"{gaji:.2f}"
+            gaji_text = "" if gaji is None else f"{float(gaji):.2f}"
             self.formPekerja.tableWidget.setItem(i, 4, QTableWidgetItem(gaji_text))
 
-            self.formPekerja.tableWidget.setItem(
-                i, 5, QTableWidgetItem("" if r.get("id_usaha")    is None else str(r["id_usaha"]))
-            )
-            self.formPekerja.tableWidget.setItem(
-                i, 6, QTableWidgetItem("" if r.get("id_keluarga") is None else str(r["id_keluarga"]))
-            )
-            self.formPekerja.tableWidget.setItem(
-                i, 7, QTableWidgetItem("" if r.get("dibuat_oleh") is None else str(r["dibuat_oleh"]))
-            )
+            self.formPekerja.tableWidget.setItem(i, 5, QTableWidgetItem(str(r.get("id_usaha", ""))))
+            self.formPekerja.tableWidget.setItem(i, 6, QTableWidgetItem(str(r.get("id_keluarga", ""))))
+            self.formPekerja.tableWidget.setItem(i, 7, QTableWidgetItem(str(r.get("dibuat_oleh", ""))))
 
     def doCariPekerja(self):
         cari = self.formPekerja.EditCari.text()
@@ -175,22 +177,15 @@ class DataPekerja(QWidget):
         for r in baris:
             i = self.formPekerja.tableWidget.rowCount()
             self.formPekerja.tableWidget.insertRow(i)
+            self.formPekerja.tableWidget.setItem(i, 0, QTableWidgetItem(str(r.get("id_pekerja", ""))))
+            self.formPekerja.tableWidget.setItem(i, 1, QTableWidgetItem(r.get("nama_pekerja") or ""))
+            self.formPekerja.tableWidget.setItem(i, 2, QTableWidgetItem(r.get("jenis_kelamin") or ""))
+            self.formPekerja.tableWidget.setItem(i, 3, QTableWidgetItem(r.get("pekerjaan") or ""))
 
-            self.formPekerja.tableWidget.setItem(i, 0, QTableWidgetItem(str(r["id_pekerja"])))
-            self.formPekerja.tableWidget.setItem(i, 1, QTableWidgetItem(r["nama_pekerja"] or ""))
-            self.formPekerja.tableWidget.setItem(i, 2, QTableWidgetItem(r["jenis_kelamin"] or ""))
-            self.formPekerja.tableWidget.setItem(i, 3, QTableWidgetItem(r["pekerjaan"] or ""))
-
-            gaji = r["gaji"]
+            gaji = r.get("gaji")
             gaji_text = "" if gaji is None else f"{float(gaji):.2f}"
             self.formPekerja.tableWidget.setItem(i, 4, QTableWidgetItem(gaji_text))
 
-            self.formPekerja.tableWidget.setItem(
-                i, 5, QTableWidgetItem("" if r["id_usaha"]    is None else str(r["id_usaha"]))
-            )
-            self.formPekerja.tableWidget.setItem(
-                i, 6, QTableWidgetItem("" if r["id_keluarga"] is None else str(r["id_keluarga"]))
-            )
-            self.formPekerja.tableWidget.setItem(
-                i, 7, QTableWidgetItem("" if r["dibuat_oleh"] is None else str(r["dibuat_oleh"]))
-            )
+            self.formPekerja.tableWidget.setItem(i, 5, QTableWidgetItem(str(r.get("id_usaha", ""))))
+            self.formPekerja.tableWidget.setItem(i, 6, QTableWidgetItem(str(r.get("id_keluarga", ""))))
+            self.formPekerja.tableWidget.setItem(i, 7, QTableWidgetItem(str(r.get("dibuat_oleh", ""))))
